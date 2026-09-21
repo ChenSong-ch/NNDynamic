@@ -11,9 +11,15 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
 def savefig(fig, name):
-    path = os.path.join(OUTPUT_DIR, name)
+    """Save a figure as PDF. `name` may be given with any extension (e.g.
+    the historical "*.png") — it is always saved as PDF (vector format,
+    resolution-independent), with the extension swapped automatically so
+    none of the 39 experiment scripts need to change their calls."""
+    base, _ext = os.path.splitext(name)
+    pdf_name = base + ".pdf"
+    path = os.path.join(OUTPUT_DIR, pdf_name)
     fig.tight_layout()
-    fig.savefig(path, dpi=140)
+    fig.savefig(path, format="pdf")
     plt.close(fig)
     print(f"  [figure saved] {path}")
     return path
